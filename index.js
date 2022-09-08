@@ -1,3 +1,5 @@
+const generateHTML = require('./src/generateHTML');
+
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -190,5 +192,25 @@ const employeePrompt = () => {
     })
 };
 
+const generateFile = data => {
+  fs.writeFile('./dist/index.html', data, err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("Your team profile has been generated! Checkout the index.html file!")
+    }
+  })
+};
+
 managerPrompt()
-  .then(employeePrompt);
+  .then(employeePrompt)
+  .then(teamArr => {
+    return generateHTML(teamArr);
+  })
+  .then(pageHTML => {
+    return generateFile(pageHTML);
+  })
+  .catch(err => {
+    console.log(err);
+  })

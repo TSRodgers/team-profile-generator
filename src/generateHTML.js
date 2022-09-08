@@ -1,45 +1,57 @@
 const generateManager = function (manager) {
   return `
-  <div>
-    <h3>${manager.name}</h3>
-    <h4>Manager<h4>
-  <div>
-
-  <div> 
-    <p class="id">ID: ${manager.id}</p>
-    <p class="email">Email: ${manager.email}</p>
-    <p class="officeNumber">Office Number: ${manager.officeNumber}</p>
-  <div>
+  <div class="col-4 mt-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h3>${manager.name}</h3>
+        <h4>Manager<h4>
+      </div>
+  
+      <div class="card-body"> 
+        <p class="id">ID: ${manager.id}</p>
+        <p class="email">Email: ${manager.email}</p>
+        <p class="officeNumber">Office Number: ${manager.officeNumber}</p>
+      <div>
+    </div>
+  </div>
   `;
 }
 
-const generateEngineer = function (Engineer) {
+const generateEngineer = function (engineer) {
   return `
-  <div>
-    <h3>${engineer.name}</h3>
-    <h4>Engineer<h4>
-  <div>
+   <div class="col-4 mt-4">   
+    <div class="card h-100">
+      <div class="card-header">
+        <h3>${engineer.name}</h3>
+        <h4>Engineer<h4>
+      </div>
 
-  <div>
-    <p class="id">ID: ${engineer.id}</p>
-    <p class="email">Email: ${engineer.email}</p>
-    <p class="github">Github: ${engineer.github}</p>
-  <div>
+      <div class="card-body">
+        <p class="id">ID: ${engineer.id}</p>
+        <p class="email">Email: ${engineer.email}</p>
+        <p class="github">Github: ${engineer.github}</p>
+      </div>
+    </div>
+  </div>
   `
 }
 
 const generateIntern = function (intern) {
   return `
-  <div>
-    <h3>${intern.name}</h3>
-    <h4>Intern<h4>
-  <div>
+  <div class="col-4 mt-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h3>${intern.name}</h3>
+        <h4>Intern<h4>
+      </div>
 
-  <div>
-    <p class="id">ID: ${intern.id}</p>
-    <p class="email">Email: ${intern.email}</p>
-    <p class="school">School: ${intern.school}</p>
-  <div>
+      <div class="card-body">
+        <p class="id">ID: ${intern.id}</p>
+        <p class="email">Email: ${intern.email}</p>
+        <p class="school">School: ${intern.school}</p>
+      </div>
+    </div>
+  </div>
   `
 }
 
@@ -54,19 +66,19 @@ const generateHTML = (data) => {
     if (role === 'Manager') {
       const managerCard = generateManager(employee);
 
-      pageArray.push(managerCard);
+      pageArr.push(managerCard);
     }
 
     if (role === 'Engineer') {
       const engineerCard = generateEngineer(employee);
 
-      pageArray.push(engineerCard);
+      pageArr.push(engineerCard);
     }
  
     if (role === 'Intern') {
       const internCard = generateIntern(employee);
 
-      pageArray.push(internCard);
+      pageArr.push(internCard);
     }
   
   }
@@ -85,6 +97,7 @@ const generatePage = function (employeeCards) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Team Profile</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.1/js/bootstrap.min.js">
       <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -94,12 +107,13 @@ const generatePage = function (employeeCards) {
           </nav>
       </header>
       <main>
-              <div id="team-cards">
+            <div class="container">
+              <div class="row justify-content-center" id="team-cards">
                   <!--Team Cards-->
                   ${employeeCards}
               </div>
+            </div>
       </main>
-      
   </body>
   </html>
 `;
