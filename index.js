@@ -1,5 +1,11 @@
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
 const fs = require('fs');
 const inquirer = require('inquirer');
+
+const employeeArr = [];
 
 const managerPrompt = () => {
   return inquirer.prompt ([
@@ -62,6 +68,13 @@ const managerPrompt = () => {
     }
     }
   ])
+  .then(mangerInput => {
+    const { name, id, email, officeNumber } = mangerInput
+    const manager = new Manager (name, id, email, officeNumber);
+
+    employeeArr.push(manager);
+    console.log(manager);
+  })
 }
 
 const employeePrompt = () => {
@@ -146,8 +159,36 @@ const employeePrompt = () => {
             }
         }
     },
+    {
+      type: 'confirm',
+      name: 'confirmAddEmployee',
+      message: 'Would you like to add more team members?',
+      default: false
+    }
     ])
-}
+    .then(employeeInput => {
+      let {name, id, email, role, github, school, confirmAddEmployee } = employeeInput;
+      let employee;
+
+      if (role === "Engineer") {
+        employee = new Engineer (name, id, email, github);
+
+        console.log(employee);
+      } else if (role === "Intern") {
+        employee = new Intern (name, id, email, school);
+
+        console.log(employee);
+      }
+
+      employeeArr.push(employee);
+
+      if (confirmAddEmployee) {
+        return employeePrompt(employeeArr);
+      } else {
+        return employeeArr;
+      }
+    })
+};
 
 managerPrompt()
   .then(employeePrompt);
